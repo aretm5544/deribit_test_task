@@ -23,7 +23,7 @@
 
 ### 1. Подготовка
 Склонируйте репозиторий и создайте файл окружения:
--git clone https://github.com/aretm5544/Testovoe.git
+-git clone https://github.com/aretm5544/deribit_test_task.git
 -cd deribit_price_tracker
 -cp .env.example .env
 
