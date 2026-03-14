@@ -33,7 +33,5 @@ class DeribitClient:
             return None
         
     
-    
-    
-# ВАЖНО: Создаем экземпляр здесь, чтобы воркер мог его импортировать
+
 deribit_client = DeribitClient()
