@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import List
+from typing import List, Optional
 
 from app.db.database import get_db
 from app.db.models import CurrencyPrice
@@ -11,11 +11,14 @@ router = APIRouter(prefix="/prices", tags=["Prices"])
 
 @router.get("/all", response_model=List[PriceResponse])
 async def get_all_prices(
-    ticker: str = Query(..., description="Тикер валюты (например, btc_usd)"),
+    ticker: Optional[str] = Query(None, description="Тикер валюты"),
     db: AsyncSession = Depends(get_db)
 ):
+    query = select(CurrencyPrice)
     
-    query = select(CurrencyPrice).where(CurrencyPrice.ticker == ticker.lower())
+    if ticker:  
+        query = query.where(CurrencyPrice.ticker == ticker.lower())
+    
     result = await db.execute(query)
     return result.scalars().all()
 
